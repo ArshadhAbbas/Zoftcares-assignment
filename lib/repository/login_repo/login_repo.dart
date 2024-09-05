@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:zoftcares/constants/dio_client.dart';
+import 'package:zoftcares/controller/posts_provider.dart';
 import 'package:zoftcares/models/user.dart';
 import 'package:zoftcares/models/version.dart';
 import 'package:zoftcares/view/login/view/login_view.dart';
@@ -27,6 +29,7 @@ class LoginRepo {
   Future logOut(BuildContext context) async {
     final pref = await SharedPreferences.getInstance();
     pref.clear();
+    Provider.of<PostsProvider>(context, listen: false).disposeValues();
     await Navigator.pushNamedAndRemoveUntil(
         context, LoginView.routePath, (route) => false);
   }
